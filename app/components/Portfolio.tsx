@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { FormEvent, useEffect, useState } from "react";
+import Work from "./Work";
 
 const navLinks = [
   { label: "Marcas", href: "#work" },
@@ -348,40 +349,7 @@ export default function Portfolio() {
         </div>
       </section>
 
-      <section id="work" style={{ background: "var(--bg-primary)" }}>
-        <motion.div {...sectionMotion} className="section-container py-[var(--section-py)]">
-          <div className="mb-16 flex flex-col justify-between gap-8 md:flex-row md:items-end">
-            <div>
-              <p className="editorial-label mb-6">Marcas & Clientes</p>
-              <h2 className="serif-heading section-heading">Presença em diferentes segmentos.</h2>
-            </div>
-            <p className="muted-copy max-w-md">
-              Uma seleção das marcas e frentes atendidas em projetos de branding, conteúdo, campanhas, presença digital e comunicação integrada.
-            </p>
-          </div>
-        </motion.div>
-
-        <div className="marquee-viewport">
-          <div className="marquee-track">
-            {[...brands, ...brands].map((brand, index) => (
-              <div key={`${brand.name}-${index}`} className="brand-item flex flex-col items-center justify-center gap-5 px-8 py-10">
-                <div className="relative h-12 w-40">
-                  <Image
-                    src={brand.src}
-                    alt={brand.name}
-                    fill
-                    className="brand-logo object-contain"
-                    sizes="160px"
-                  />
-                </div>
-                <span className="editorial-label text-center" style={{ color: "var(--text-muted)" }}>
-                  {brand.name}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <Work />
 
       <section id="about" style={{ background: "var(--bg-secondary)" }}>
         <motion.div {...sectionMotion} className="section-container grid gap-16 py-[var(--section-py)] lg:grid-cols-[0.92fr_1.08fr] lg:items-center">

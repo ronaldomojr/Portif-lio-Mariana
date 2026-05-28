@@ -189,7 +189,8 @@ img {
 .marquee-track {
   display: flex;
   width: max-content;
-  animation: marquee 40s linear infinite;
+  animation: marquee 45s linear infinite;
+  will-change: transform;
 }
 
 .marquee-viewport:hover .marquee-track {
@@ -200,6 +201,7 @@ img {
   width: clamp(12rem, 22cqw, 20rem);
   min-height: 7.5rem;
   border-right: 1px solid var(--border);
+  flex-shrink: 0;
 }
 
 .brand-logo {
@@ -245,13 +247,201 @@ img {
   color: var(--bg-primary);
 }
 
-@keyframes marquee {
-  from {
+/* ===== PREMIUM MARQUEE STYLES ===== */
+.premium-marquee-container {
+  transition: all 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.premium-marquee-container:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Gradient fade effects for marquee edges */
+.premium-fade-left {
+  background: linear-gradient(
+    to right,
+    var(--color-bg-primary) 0%,
+    rgba(10, 10, 10, 0.8) 40%,
+    transparent 100%
+  );
+}
+
+.premium-fade-right {
+  background: linear-gradient(
+    to left,
+    var(--color-bg-primary) 0%,
+    rgba(10, 10, 10, 0.8) 40%,
+    transparent 100%
+  );
+}
+
+/* Brand items styling */
+.premium-brand-item {
+  opacity: 0.55;
+  transition: opacity 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.premium-marquee-container:hover .premium-brand-item {
+  opacity: 0.7;
+}
+
+.premium-brand-item:hover {
+  opacity: 1 !important;
+}
+
+/* Logo wrapper with scale effect */
+.premium-brand-logo-wrapper {
+  transition: transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.premium-brand-item:hover .premium-brand-logo-wrapper {
+  transform: scale(1.08);
+}
+
+.premium-brand-logo {
+  transition: filter 600ms ease-out, brightness 400ms ease-out;
+  filter: grayscale(1) brightness(0.9);
+}
+
+.premium-brand-item:hover .premium-brand-logo {
+  filter: grayscale(0) brightness(1.1);
+}
+
+/* CSS-ONLY MARQUEE FALLBACK (if GSAP fails) */
+@keyframes marquee-loop {
+  0% {
     transform: translateX(0);
   }
-  to {
-    transform: translateX(-50%);
+  100% {
+    transform: translateX(calc(-50%));
   }
+}
+
+/* Marquee animation class with CSS fallback */
+[data-gsap-marquee] {
+  animation: marquee-loop 60s linear infinite;
+}
+
+/* Pause animation on container hover */
+.premium-marquee-container:hover [data-gsap-marquee] {
+  animation-play-state: paused;
+}
+
+/* ===== PREMIUM ANIMATION EFFECTS ===== */
+.premium-fade-up {
+  animation: fadeUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.premium-fade-in {
+  animation: fadeIn 0.9s ease-out forwards;
+}
+
+.premium-scale-in {
+  animation: scaleIn 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.premium-slide-in-left {
+  animation: slideInLeft 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.premium-slide-in-right {
+  animation: slideInRight 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-48px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(48px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ===== SMOOTH SCROLL & HOVER EFFECTS ===== */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Elegant hover effects */
+.premium-hover {
+  transition: all 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Premium link effects */
+.premium-link {
+  position: relative;
+  transition: color 300ms ease-out;
+}
+
+.premium-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  transition: width 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.premium-link:hover::after {
+  width: 100%;
+}
+
+.premium-hover:hover {
+  transform: translateY(-2px);
+}
+
+/* Text gradient effect */
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent) 0%, rgba(255, 255, 255, 0.7) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 @media (max-width: 767px) {

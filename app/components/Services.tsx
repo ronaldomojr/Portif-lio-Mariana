@@ -49,19 +49,21 @@ export default function Services() {
 
         {/* Left Column: Image */}
         <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, x: -50, scale: 0.98 }}
+          whileInView={{ opacity: 1, x: 0, scale: 1 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="relative w-full h-full min-h-[60vh] md:min-h-full order-2 md:order-1"
+          transition={{ duration: 1.1, ease: [0.34, 1.56, 0.64, 1] }}
+          className="relative w-full h-full min-h-[60vh] md:min-h-full order-2 md:order-1 premium-hover group overflow-hidden rounded-sm"
         >
           <Image
             src="/images/photos/MMTS_SHOOTING LIFE0410.jpeg"
             alt="Direção Criativa e Estratégia de Branding"
             fill
-            className="object-cover object-top"
+            className="object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out"
             sizes="(max-width: 768px) 100vw, 50vw"
           />
+          {/* Overlay gradient on hover */}
+          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-500" />
         </motion.div>
 
         {/* Right Column: Skills Grid */}
@@ -69,12 +71,12 @@ export default function Services() {
           initial={{ opacity: 0, x: 50 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.2 }}
+          transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.15 }}
           className="flex flex-col justify-center gap-12 md:gap-16 lg:gap-20 py-16 md:py-0 order-1 md:order-2"
         >
           <div>
             <h2
-              className="editorial-label mb-6 md:mb-8"
+              className="editorial-label mb-6 md:mb-8 premium-fade-in"
               style={{ fontSize: "0.6875rem", letterSpacing: "0.15em" }}
             >
               02. Áreas de Atuação
@@ -88,8 +90,8 @@ export default function Services() {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.6, delay: index * 0.08 }}
-                className="flex flex-col gap-6"
+                transition={{ duration: 0.7, delay: index * 0.08, ease: [0.25, 0.46, 0.45, 0.94] }}
+                className="flex flex-col gap-6 p-6 rounded-sm transition-all duration-500 ease-out hover:bg-gradient-to-br hover:from-[rgba(255,255,255,0.04)] hover:to-[rgba(255,255,255,0.01)] hover:border-[rgba(255,255,255,0.1)] border border-transparent group cursor-pointer"
               >
                 <h3
                   style={{
@@ -98,13 +100,17 @@ export default function Services() {
                     fontWeight: 400,
                     color: "var(--color-text-primary)",
                     lineHeight: 1.3,
+                    transition: "all 400ms cubic-bezier(0.34, 1.56, 0.64, 1)",
                   }}
+                  className="group-hover:text-[var(--accent)]"
                 >
                   {skill.title}
                 </h3>
-                <div
-                  className="w-12 h-px"
-                  style={{ backgroundColor: "var(--color-border-hover)" }}
+                <motion.div
+                  className="h-px"
+                  initial={{ width: 12, backgroundColor: "var(--color-border)" }}
+                  whileHover={{ width: 40, backgroundColor: "var(--accent)" }}
+                  transition={{ duration: 0.4, ease: [0.34, 1.56, 0.64, 1] }}
                 />
                 <p
                   style={{
@@ -113,7 +119,11 @@ export default function Services() {
                     lineHeight: 1.8,
                     color: "var(--color-text-secondary)",
                     letterSpacing: "0.2px",
+                    transition: "all 400ms ease-out",
                   }}
+                  className="group-hover:text-[rgba(245,240,235,0.8)]"
+                  }}
+                  className="group-hover:text-[var(--text-primary)]"
                 >
                   {skill.description}
                 </p>

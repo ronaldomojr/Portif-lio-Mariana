@@ -116,7 +116,7 @@ const stats = [
   { value: "08", label: "Frentes de Atuação" },
   { value: "04", label: "Projetos Reconhecidos" },
   { value: "2028", label: "Formação UniFOA" },
-];gi
+];
 
 /* --- Services ----------------------------------------------------------------- */
 const services = [

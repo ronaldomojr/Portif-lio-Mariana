@@ -16,21 +16,25 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Mariana Páscoa — Strategic Branding, Content & Communication",
+  title: "Mariana Páscoa — Diretora Artística & Publicitária",
   description:
-    "Portfólio estratégico de Mariana Páscoa. Transformo posicionamento em presença, conteúdo em percepção e marcas em experiências que conectam estratégia, narrativa e crescimento.",
+    "Portfólio de Mariana Páscoa, Diretora Artística e Publicitária. Transformo posicionamento em presença, conteúdo em percepção e marcas em experiências que conectam estratégia, narrativa e crescimento.",
   keywords: [
+    "diretora artística",
+    "publicitária",
     "branding",
     "estratégia de marca",
+    "direção criativa",
     "marketing digital",
-    "comunicação",
+    "comunicação integrada",
     "content manager",
     "Mariana Páscoa",
+    "Volta Redonda",
   ],
   openGraph: {
-    title: "Mariana Páscoa — Strategic Branding, Content & Communication",
+    title: "Mariana Páscoa — Diretora Artística & Publicitária",
     description:
-      "Transformo posicionamento em presença, conteúdo em percepção e marcas em experiências.",
+      "Transformo posicionamento em presença, conteúdo em percepção e marcas em experiências que conectam estratégia, narrativa e crescimento.",
     type: "website",
   },
 };

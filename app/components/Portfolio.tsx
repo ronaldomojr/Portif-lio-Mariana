@@ -116,7 +116,7 @@ const stats = [
   { value: "08", label: "Frentes de Atuação" },
   { value: "04", label: "Projetos Reconhecidos" },
   { value: "2028", label: "Formação UniFOA" },
-];
+];gi
 
 /* --- Services ----------------------------------------------------------------- */
 const services = [
@@ -640,9 +640,9 @@ export default function Portfolio() {
       >
         <div className="flex" style={{ height: "clamp(240px, 45vh, 480px)" }}>
           {[
-            { src: "/images/photos/DSC04332 (1).jpeg", pos: "50% 15%", delay: 0 },
-            { src: "/images/photos/MMTS_SHOOTING LIFE0319.jpeg", pos: "50% 35%", delay: 0.1 },
-            { src: "/images/photos/DSC04333 (1).jpeg", pos: "50% 20%", delay: 0.2 },
+            { src: "/images/photos/DSC04332 (1).jpeg", pos: "50% 30%", delay: 0 },
+            { src: "/images/photos/MMTS_SHOOTING LIFE0319.jpeg", pos: "50% 38%", delay: 0.1 },
+            { src: "/images/photos/DSC04333 (1).jpeg", pos: "50% 35%", delay: 0.2 },
           ].map((photo, i) => (
             <motion.div
               key={i}
@@ -783,7 +783,7 @@ export default function Portfolio() {
             src="/images/photos/IMG_1150.JPG"
             alt="Mariana Páscoa — Direção Criativa"
             fill
-            className="object-cover object-[50%_25%]"
+            className="object-cover object-[50%_35%]"
             sizes="100vw"
             loading="lazy"
           />
@@ -804,7 +804,7 @@ export default function Portfolio() {
             transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
             <p className="editorial-label mb-7" style={{ color: "var(--accent)" }}>
-              Direção Artística
+              Publicitária
             </p>
             <blockquote
               className="serif-heading"
@@ -937,7 +937,7 @@ export default function Portfolio() {
             src="/images/photos/MMTS_SHOOTING LIFE0410.jpeg"
             alt="Mariana Páscoa — Bastidores da Comunicação"
             fill
-            className="object-cover object-[50%_30%]"
+            className="object-cover object-[50%_45%]"
             sizes="100vw"
             loading="lazy"
           />
@@ -958,7 +958,7 @@ export default function Portfolio() {
             transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
             <span className="editorial-label" style={{ color: "rgba(255,255,255,0.55)" }}>
-              Comunicação & Mediação
+              Comunicação 
             </span>
             <p
               className="serif-heading mt-4"

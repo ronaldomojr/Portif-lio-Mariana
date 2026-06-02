@@ -100,13 +100,13 @@ const projects = [
     name: "Poubel & Machado",
     category: "Advocacia",
     logo: "/images/logos/POUBEL & MACHADO.png",
-    featured: false,
+    featured: true, /* <-- Mude de false para true */
   },
   {
     name: "Casa de Mãe",
     category: "Negócios & Serviços",
     logo: "/images/logos/CASA DE MÃE.png",
-    featured: false,
+    featured: true, /* <-- Mude de false para true */
   },
 ];
 
@@ -326,15 +326,22 @@ export default function Portfolio() {
 
       {/* ======================== NAV ======================== */}
       <motion.header
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="fixed left-0 right-0 top-0 z-50 transition-all duration-1000"
-        style={{
-          background: isScrolled ? "rgba(10,10,10,0.96)" : "transparent",
-          borderBottom: isScrolled ? "1px solid var(--border)" : "1px solid transparent",
-          backdropFilter: isScrolled ? "blur(20px)" : "none",
+        initial={{ 
+          y: -20, 
+          opacity: 0, 
+          backgroundColor: "rgba(10, 10, 10, 0)",
+          borderBottomColor: "rgba(26, 26, 26, 0)",
+          backdropFilter: "blur(0px)"
         }}
+        animate={{ 
+          y: 0, 
+          opacity: 1,
+          backgroundColor: isScrolled ? "rgba(10, 10, 10, 0.96)" : "rgba(10, 10, 10, 0)",
+          borderBottomColor: isScrolled ? "rgba(26, 26, 26, 1)" : "rgba(26, 26, 26, 0)",
+          backdropFilter: isScrolled ? "blur(20px)" : "blur(0px)"
+        }}
+        transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+        className="fixed left-0 right-0 top-0 z-50 border-b"
       >
         <nav className="mx-auto flex h-20 w-full max-w-[1440px] items-center justify-between px-6 md:px-12 lg:px-20">
           <a
@@ -472,6 +479,7 @@ export default function Portfolio() {
               transition={{ duration: 0.95, delay: 0.45 }}
               className="serif-heading display-heading md:pl-6"
             >
+              
               <br />
               Estratégia
               <br />
@@ -557,12 +565,12 @@ export default function Portfolio() {
                 style={{ padding: "0 clamp(2rem, 4vw, 5rem)" }}
               >
                 <div
-                  className="relative brand-display-logo"
-                  style={{
-                    height: "clamp(2.5rem, 3.5vh, 3.8rem)",
-                    width: "clamp(6rem, 9vw, 11rem)",
-                  }}
-                >
+  className="relative brand-display-logo"
+  style={{
+    height: "clamp(4rem, 6vh, 6rem)", // <-- Alterado aqui para aumentar a altura máxima
+    width: "clamp(8rem, 14vw, 16rem)", // <-- Aumentado a largura proporcionalmente para não cortar
+  }}
+>
                   <Image
                     src={brand.src}
                     alt={brand.name}

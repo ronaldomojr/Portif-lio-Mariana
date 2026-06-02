@@ -205,7 +205,6 @@ img {
 }
 
 .brand-logo {
-  filter: grayscale(1) invert(1) brightness(1.2);
   opacity: 0.72;
   transition: opacity 320ms ease, transform 420ms ease;
 }
@@ -249,11 +248,9 @@ img {
 
 /* ===== BRAND DISPLAY — MARQUEE ===== */
 
-/* Force ALL logos to white silhouette on dark bg; hover restores color */
 .brand-logo-img {
-  filter: brightness(0) invert(1);
   opacity: 0.75;
-  transition: filter 550ms ease, opacity 450ms ease;
+  transition: opacity 450ms ease;
 }
 
 .brand-display-item {
@@ -262,7 +259,6 @@ img {
 }
 
 .brand-display-item:hover .brand-logo-img {
-  filter: none;
   opacity: 1;
 }
 
@@ -304,6 +300,8 @@ img {
 .project-card {
   position: relative;
   aspect-ratio: 3 / 4;
+  height: 100%; /* <-- OBRIGA O CARTÃO A PREENCHER O VÃO */
+  width: 100%;
   background: var(--bg-secondary);
   overflow: hidden;
   cursor: pointer;
@@ -312,7 +310,8 @@ img {
 
 .project-card--featured {
   grid-column: span 2;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 3 / 2; /* <-- Proporção corrigida para equivaler a 2 colunas */
+  height: 100%; /* <-- OBRIGA O CARTÃO A PREENCHER O VÃO */
 }
 
 @media (max-width: 640px) {
@@ -338,17 +337,16 @@ img {
 .project-card__logo-wrap {
   position: relative;
   flex: 1;
-  margin: 1.5rem 1.75rem;
+  /* Margem reduzida significativamente para deixar a imagem maior */
+  margin: 0.5rem; 
 }
 
 .project-card__logo {
-  filter: brightness(0) invert(1);
   opacity: 0.65;
-  transition: filter 600ms ease, opacity 450ms ease, transform 700ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: opacity 450ms ease, transform 700ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .project-card:hover .project-card__logo {
-  filter: none;
   opacity: 1;
   transform: scale(1.08);
 }

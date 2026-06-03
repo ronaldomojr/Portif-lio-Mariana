@@ -58,19 +58,19 @@ const projects = [
     name: "Arena Emirados",
     category: "Esporte & Lifestyle",
     logo: "/images/logos/ARENA EMIRADOS.jpg",
-    featured: false,
+    featured: true,
   },
   {
     name: "Body Prime Smart",
     category: "Saúde & Performance",
     logo: "/images/logos/BODYPRIME.png",
-    featured: false,
+    featured: true,
   },
   {
     name: "Sigma Gelato & Café",
     category: "Gastronomia",
     logo: "/images/logos/SIGMA.png",
-    featured: true,
+    featured: false,
   },
   {
     name: "Boizão",
@@ -326,15 +326,15 @@ export default function Portfolio() {
 
       {/* ======================== NAV ======================== */}
       <motion.header
-        initial={{ 
-          y: -20, 
-          opacity: 0, 
+        initial={{
+          y: -20,
+          opacity: 0,
           backgroundColor: "rgba(10, 10, 10, 0)",
           borderBottomColor: "rgba(26, 26, 26, 0)",
           backdropFilter: "blur(0px)"
         }}
-        animate={{ 
-          y: 0, 
+        animate={{
+          y: 0,
           opacity: 1,
           backgroundColor: isScrolled ? "rgba(10, 10, 10, 0.96)" : "rgba(10, 10, 10, 0)",
           borderBottomColor: isScrolled ? "rgba(26, 26, 26, 1)" : "rgba(26, 26, 26, 0)",
@@ -346,10 +346,10 @@ export default function Portfolio() {
         <nav className="mx-auto flex h-20 w-full max-w-[1440px] items-center justify-between px-6 md:px-12 lg:px-20">
           <a
             href="#hero"
-            className="relative z-50 serif-heading"
+            className="relative z-50 editorial-label"
             style={{ fontSize: "0.875rem", textTransform: "uppercase", letterSpacing: "0.1em" }}
           >
-            <span style={{fontStyle: "italic" }}>Mariana Páscoa</span>
+            Mariana Páscoa
           </a>
 
           <div className="hidden items-center gap-10 md:flex">
@@ -422,6 +422,7 @@ export default function Portfolio() {
 
       {/* ========== HERO ========== */}
       <section id="hero" className="relative flex min-h-screen items-end overflow-hidden">
+        
 
         {/* Full-bleed image */}
         <div className="absolute inset-0 bg-gray-900">
@@ -463,15 +464,15 @@ export default function Portfolio() {
               className="absolute left-0 top-1/2 hidden h-32 w-px origin-top md:block"
               style={{ background: "var(--accent)" }}
             />
+            <br />
 
+            {/* Mantemos o parágrafo original limpo para não interferir */}
             <motion.p
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.25 }}
-              className="editorial-label mb-10 md:pl-6"
-            >
-              
-            </motion.p>
+              className="editorial-label md:pl-6"
+            />
 
             <motion.h1
               initial={{ opacity: 0, y: 32 }}
@@ -479,8 +480,11 @@ export default function Portfolio() {
               transition={{ duration: 0.95, delay: 0.45 }}
               className="serif-heading display-heading md:pl-6"
             >
-              
               <br />
+              {/* Inserimos a palavra aqui dentro, com a classe 'block' para que Estratégia fique na linha de baixo */}
+              <span className="editorial-label block mb-2" style={{ fontStyle: "normal" }}>
+                Publicitária
+              </span>
               Estratégia
               <br />
               que vira
@@ -565,12 +569,12 @@ export default function Portfolio() {
                 style={{ padding: "0 clamp(2rem, 4vw, 5rem)" }}
               >
                 <div
-  className="relative brand-display-logo"
-  style={{
-    height: "clamp(4rem, 6vh, 6rem)", // <-- Alterado aqui para aumentar a altura máxima
-    width: "clamp(8rem, 14vw, 16rem)", // <-- Aumentado a largura proporcionalmente para não cortar
-  }}
->
+                  className="relative brand-display-logo"
+                  style={{
+                    height: "clamp(4rem, 6vh, 6rem)", // <-- Alterado aqui para aumentar a altura máxima
+                    width: "clamp(8rem, 14vw, 16rem)", // <-- Aumentado a largura proporcionalmente para não cortar
+                  }}
+                >
                   <Image
                     src={brand.src}
                     alt={brand.name}
@@ -966,7 +970,7 @@ export default function Portfolio() {
             transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
             <span className="editorial-label" style={{ color: "rgba(255,255,255,0.55)" }}>
-              Comunicação 
+              Comunicação
             </span>
             <p
               className="serif-heading mt-4"

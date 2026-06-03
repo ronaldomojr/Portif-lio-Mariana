@@ -198,13 +198,6 @@ const experiences = [
       "Desenvolvimento de estratégias digitais, planejamento de conteúdo, gestão de redes sociais e fortalecimento de presença digital. Atuação direta no desenvolvimento de posicionamento, direção criativa, roteirização, planejamento editorial e presença multicanal.",
   },
   {
-    period: "2024 – 2025",
-    role: "Auxiliar de Professora / Educação Especial",
-    company: "CENPPRI",
-    description:
-      "Apoio pedagógico e mediação de aluno autista; produção de conteúdo visual.",
-  },
-  {
     period: "2023 – 2024",
     role: "Assistente Administrativo",
     company: "Malta Rio Industrial",
@@ -525,7 +518,8 @@ export default function Portfolio() {
       <section id="about" style={{ background: "var(--bg-secondary)" }}>
         <motion.div
           {...sectionMotion}
-          className="section-container grid gap-16 py-[var(--section-py)] lg:grid-cols-[1.08fr_0.92fr] lg:items-start"
+          className="section-container grid gap-12 lg:grid-cols-[1.08fr_0.92fr] lg:items-start lg:gap-16"
+          style={{ paddingTop: "var(--section-py)", paddingBottom: "clamp(2.75rem, 5cqw, 5rem)" }}
         >
           {/* Copy */}
           <div>
@@ -558,12 +552,44 @@ export default function Portfolio() {
               </p>
             </div>
 
+          </div>
+
+          <div className="mx-auto w-full max-w-xl">
+            {/* Portrait */}
+            <div className="relative">
+              <motion.div
+                className="relative overflow-hidden grayscale"
+                style={{ aspectRatio: "3/4" }}
+                initial={{ opacity: 0, scale: 0.96 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 1.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+              >
+                <Image
+                  src="/images/photos/MMTS_SHOOTING LIFE0321.jpeg"
+                  alt="Mariana Páscoa — retrato editorial em preto e branco"
+                  fill
+                  className="object-cover object-[center_20%]"
+                  sizes="(max-width: 1024px) 100vw, 46vw"
+                />
+              </motion.div>
+              <div
+                className="absolute -bottom-5 right-5 h-3/4 w-3/4 border border-white/30"
+                aria-hidden="true"
+              />
+              <div className="absolute bottom-6 left-0 border border-[var(--border)] bg-[var(--bg-primary)] px-6 py-4">
+                <span className="editorial-label" style={{ color: "var(--accent)" }}>
+                  Volta Redonda · Brasil
+                </span>
+              </div>
+            </div>
+
             {/* Stats grid */}
-            <div className="mt-14 grid border-t border-[var(--border)] md:grid-cols-2">
+            <div className="mt-[clamp(2.25rem,4cqw,3.5rem)] grid grid-cols-2 border-t border-[var(--border)]">
               {stats.map((stat) => (
                 <motion.div
                   key={stat.label}
-                  className="border-b border-[var(--border)] py-10 md:odd:border-r md:odd:pr-10 md:even:pl-10"
+                  className="min-h-[clamp(8rem,10cqw,10.75rem)] border-b border-[var(--border)] p-[clamp(1.75rem,2.4cqw,2.5rem)] odd:border-r odd:border-[var(--border)]"
                   whileHover={{ backgroundColor: "rgba(255,255,255,0.022)" }}
                   transition={{ duration: 0.3 }}
                 >
@@ -581,35 +607,6 @@ export default function Portfolio() {
                   </span>
                 </motion.div>
               ))}
-            </div>
-          </div>
-
-          {/* Portrait */}
-          <div className="relative mx-auto w-full max-w-xl">
-            <motion.div
-              className="relative overflow-hidden grayscale"
-              style={{ aspectRatio: "3/4" }}
-              initial={{ opacity: 0, scale: 0.96 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 1.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-            >
-              <Image
-                src="/images/photos/MMTS_SHOOTING LIFE0321.jpeg"
-                alt="Mariana Páscoa — retrato editorial em preto e branco"
-                fill
-                className="object-cover object-[center_20%]"
-                sizes="(max-width: 1024px) 100vw, 46vw"
-              />
-            </motion.div>
-            <div
-              className="absolute -bottom-5 right-5 h-3/4 w-3/4 border border-white/30"
-              aria-hidden="true"
-            />
-            <div className="absolute bottom-6 left-0 border border-[var(--border)] bg-[var(--bg-primary)] px-6 py-4">
-              <span className="editorial-label" style={{ color: "var(--accent)" }}>
-                Volta Redonda · Brasil
-              </span>
             </div>
           </div>
         </motion.div>
@@ -825,8 +822,8 @@ export default function Portfolio() {
                 fontStyle: "italic",
               }}
             >
-              "Marcas são percebidas através das experiências, da narrativa e da forma como
-              ocupam espaço no digital e fora dele."
+              &quot;Marcas são percebidas através das experiências, da narrativa e da forma como
+              ocupam espaço no digital e fora dele.&quot;
             </blockquote>
           </motion.div>
         </div>
@@ -835,14 +832,12 @@ export default function Portfolio() {
       {/* ======================== EDUCATION ======================== */}
       <section id="education" style={{ background: "var(--bg-primary)" }}>
         <motion.div {...sectionMotion} className="section-container py-[var(--section-py)]">
-          <div className="mb-16 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
-            <div>
-              <p className="editorial-label mb-7">Formação & Especializações</p>
-              <h2 className="serif-heading section-heading">
-                Aprendizado aplicado à construção de marca.
-              </h2>
-            </div>
-            <p className="muted-copy">
+          <div className="mb-16 md:mb-20">
+            <p className="editorial-label mb-7">Formação & Especializações</p>
+            <h2 className="serif-heading section-heading">
+              Aprendizado aplicado à construção de marca.
+            </h2>
+            <p className="muted-copy mt-7 max-w-3xl">
               Repertório em publicidade, branding, marketing digital, storytelling, neurociência
               aplicada à comunicação e cultura digital.
             </p>
@@ -877,14 +872,12 @@ export default function Portfolio() {
       {/* ======================== SERVICES ======================== */}
       <section id="services" style={{ background: "var(--bg-secondary)" }}>
         <motion.div {...sectionMotion} className="section-container py-[var(--section-py)]">
-          <div className="mb-20 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
-            <div>
-              <p className="editorial-label mb-7">Serviços</p>
-              <h2 className="serif-heading section-heading">
-                O que posso fazer pela sua marca.
-              </h2>
-            </div>
-            <p className="muted-copy">
+          <div className="mb-20">
+            <p className="editorial-label mb-7">Serviços</p>
+            <h2 className="serif-heading section-heading">
+              O que posso fazer pela sua marca.
+            </h2>
+            <p className="muted-copy mt-7 max-w-3xl">
               Direção criativa, branding, conteúdo e comunicação integrada — com visão
               estratégica e presença real.
             </p>
@@ -929,7 +922,7 @@ export default function Portfolio() {
               </p>
             </div>
             <a
-              href="#contact"
+              href="https://wa.me/5524992294044"
               className="outline-button inline-flex min-h-14 items-center justify-center px-8 editorial-label"
             >
               Iniciar conversa
@@ -1192,15 +1185,19 @@ export default function Portfolio() {
         className="border-t border-[var(--border)]"
         style={{ background: "var(--bg-primary)" }}
       >
-        <div className="mx-auto grid min-h-24 w-full max-w-[1440px] items-center gap-5 px-6 py-8 md:grid-cols-[1fr_auto_1fr] md:px-12 lg:px-20">
-          <span className="serif-heading" style={{ fontSize: "1rem" }}>
+        <div className="mx-auto flex h-20 w-full max-w-[1440px] items-center justify-between px-6 md:px-12 lg:px-20">
+          <a
+            href="#hero"
+            className="relative z-50 editorial-label"
+            style={{ fontSize: "0.875rem", textTransform: "uppercase", letterSpacing: "0.1em" }}
+          >
             Mariana Páscoa
-          </span>
+          </a>
           <span
             className="editorial-label text-center"
             style={{ color: "var(--text-muted)", fontSize: "0.625rem" }}
           >
-            © 2026 · Diretora Artística & Publicitária
+            © 2026 · Publicitária
           </span>
           <span className="hidden h-px w-16 justify-self-end bg-white md:block" />
         </div>

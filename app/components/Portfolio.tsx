@@ -525,37 +525,8 @@ export default function Portfolio() {
       <section id="about" style={{ background: "var(--bg-secondary)" }}>
         <motion.div
           {...sectionMotion}
-          className="section-container grid gap-16 py-[var(--section-py)] lg:grid-cols-[0.92fr_1.08fr] lg:items-center"
+          className="section-container grid gap-16 py-[var(--section-py)] lg:grid-cols-[1.08fr_0.92fr] lg:items-start"
         >
-          {/* Portrait */}
-          <div className="relative mx-auto w-full max-w-xl">
-            <motion.div
-              className="relative overflow-hidden grayscale"
-              style={{ aspectRatio: "3/4" }}
-              initial={{ opacity: 0, scale: 0.96 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 1.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-            >
-              <Image
-                src="/images/photos/MMTS_SHOOTING LIFE0321.jpeg"
-                alt="Mariana Páscoa — retrato editorial em preto e branco"
-                fill
-                className="object-cover object-[center_20%]"
-                sizes="(max-width: 1024px) 100vw, 46vw"
-              />
-            </motion.div>
-            <div
-              className="absolute -bottom-5 right-5 h-3/4 w-3/4 border border-white/30"
-              aria-hidden="true"
-            />
-            <div className="absolute bottom-6 left-0 border border-[var(--border)] bg-[var(--bg-primary)] px-6 py-4">
-              <span className="editorial-label" style={{ color: "var(--accent)" }}>
-                Volta Redonda · Brasil
-              </span>
-            </div>
-          </div>
-
           {/* Copy */}
           <div>
             <p className="editorial-label mb-7">Sobre Mim</p>
@@ -588,11 +559,11 @@ export default function Portfolio() {
             </div>
 
             {/* Stats grid */}
-            <div className="mt-14 grid grid-cols-2 border-t border-[var(--border)] pt-10">
+            <div className="mt-14 grid border-t border-[var(--border)] md:grid-cols-2">
               {stats.map((stat) => (
                 <motion.div
                   key={stat.label}
-                  className="border-b border-[var(--border)] py-7 pr-6 even:pl-6 odd:border-r"
+                  className="border-b border-[var(--border)] py-10 md:odd:border-r md:odd:pr-10 md:even:pl-10"
                   whileHover={{ backgroundColor: "rgba(255,255,255,0.022)" }}
                   transition={{ duration: 0.3 }}
                 >
@@ -610,6 +581,35 @@ export default function Portfolio() {
                   </span>
                 </motion.div>
               ))}
+            </div>
+          </div>
+
+          {/* Portrait */}
+          <div className="relative mx-auto w-full max-w-xl">
+            <motion.div
+              className="relative overflow-hidden grayscale"
+              style={{ aspectRatio: "3/4" }}
+              initial={{ opacity: 0, scale: 0.96 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 1.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+            >
+              <Image
+                src="/images/photos/MMTS_SHOOTING LIFE0321.jpeg"
+                alt="Mariana Páscoa — retrato editorial em preto e branco"
+                fill
+                className="object-cover object-[center_20%]"
+                sizes="(max-width: 1024px) 100vw, 46vw"
+              />
+            </motion.div>
+            <div
+              className="absolute -bottom-5 right-5 h-3/4 w-3/4 border border-white/30"
+              aria-hidden="true"
+            />
+            <div className="absolute bottom-6 left-0 border border-[var(--border)] bg-[var(--bg-primary)] px-6 py-4">
+              <span className="editorial-label" style={{ color: "var(--accent)" }}>
+                Volta Redonda · Brasil
+              </span>
             </div>
           </div>
         </motion.div>

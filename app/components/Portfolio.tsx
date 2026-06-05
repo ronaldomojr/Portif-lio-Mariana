@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 
 /* --- Navigation ----------------------------------------------------------------- */
@@ -245,11 +245,22 @@ const sectionMotion = {
   transition: { duration: 0.85, ease: [0.25, 0.46, 0.45, 0.94] },
 } as const;
 
+/* --- Editorial section kicker (numbered chapter label) ------------------------ */
+function SectionKicker({ index, label }: { index: string; label: string }) {
+  return (
+    <div className="section-kicker">
+      <span className="section-kicker__num serif-heading">{index}</span>
+      <span className="section-kicker__rule" aria-hidden="true" />
+      <span className="editorial-label">{label}</span>
+    </div>
+  );
+}
+
 /* --- Component ---------------------------------------------------------------- */
 export default function Portfolio() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [marqueeFallback, setMarqueeFallback] = useState(false);
   const marqueeRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<gsap.core.Timeline | null>(null);
@@ -279,6 +290,7 @@ export default function Portfolio() {
     const startAnimation = () => {
       const scrollWidth = marquee.scrollWidth;
       if (scrollWidth > 1000) {
+        setMarqueeFallback(false);
         if (timelineRef.current) timelineRef.current.kill();
         const singleSetWidth = scrollWidth / 4;
         const duration = singleSetWidth / 80;
@@ -301,17 +313,15 @@ export default function Portfolio() {
       } else if (retries < 30) {
         retries++;
         setTimeout(startAnimation, 200);
+      } else {
+        // GSAP could not measure the track — fall back to a pure-CSS loop.
+        setMarqueeFallback(true);
       }
     };
 
     setTimeout(startAnimation, 800);
     return () => { if (timelineRef.current) timelineRef.current.kill(); };
   }, []);
-
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setIsSubmitted(true);
-  }
 
   /* JSX */
   return (
@@ -414,7 +424,7 @@ export default function Portfolio() {
       </AnimatePresence>
 
       {/* ========== HERO ========== */}
-      <section id="hero" className="relative flex min-h-screen items-end overflow-hidden">
+      <section id="hero" className="relative flex min-h-screen flex-col overflow-hidden">
         
         {/* Full-bleed image */}
         <div className="absolute inset-0 bg-gray-900">
@@ -423,7 +433,7 @@ export default function Portfolio() {
             alt="Mariana Páscoa — Growth Content Manager"
             fill
             priority
-            quality={100}
+            quality={95}
             className="object-cover"
             style={{ objectPosition: "50% 35%" }}
             sizes="100vw"
@@ -445,38 +455,57 @@ export default function Portfolio() {
 
         <div className="absolute bottom-0 left-0 right-0 h-px" style={{ background: "var(--border)" }} />
 
-        {/* Text anchored to bottom */}
-        <div className="section-container relative z-10 pb-24 md:pb-36 lg:pb-52">
-          <div className="relative max-w-5xl">
+        {/* Top meta row — cover masthead */}
+        <div className="section-container relative z-10 pt-28 md:pt-32">
+          <motion.div
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="flex items-center justify-between gap-4 border-b border-white/10 pb-5"
+          >
+            <span className="editorial-label">Portfólio</span>
+            <span
+              className="editorial-label hidden sm:block"
+              style={{ color: "rgba(245,240,235,0.55)" }}
+            >
+              Branding · Conteúdo · Estratégia
+            </span>
+            <span className="editorial-label" style={{ color: "rgba(245,240,235,0.55)" }}>
+              Ed. 2026
+            </span>
+          </motion.div>
+        </div>
+
+        <div className="flex-1" aria-hidden="true" />
+
+        {/* Headline anchored to bottom */}
+        <div className="section-container relative z-10 pb-24 md:pb-32 lg:pb-40">
+          <div className="relative max-w-5xl md:pl-8">
             {/* Decorative vertical rule */}
             <motion.div
               initial={{ scaleY: 0 }}
               animate={{ scaleY: 1 }}
-              transition={{ duration: 0.9, delay: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="absolute left-0 top-1/2 hidden h-32 w-px origin-top md:block"
-              style={{ background: "var(--accent)" }}
+              transition={{ duration: 1, delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="absolute left-0 top-2 hidden w-px origin-top md:block"
+              style={{ height: "calc(100% - 0.5rem)", background: "var(--accent)" }}
+              aria-hidden="true"
             />
-            <br />
 
-            {/* Mantemos o parágrafo original limpo para não interferir */}
-            <motion.p
+            <motion.span
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.25 }}
-              className="editorial-label md:pl-6"
-            />
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="editorial-label block mb-6"
+            >
+              Publicitária · Growth Content Manager
+            </motion.span>
 
             <motion.h1
               initial={{ opacity: 0, y: 32 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.95, delay: 0.45 }}
-              className="serif-heading display-heading md:pl-6"
+              className="serif-heading display-heading"
             >
-              <br />
-              {/* Inserimos a palavra aqui dentro, com a classe 'block' para que Estratégia fique na linha de baixo */}
-              <span className="editorial-label block mb-2" style={{ fontStyle: "normal" }}>
-                Publicitária
-              </span>
               Estratégia
               <br />
               que vira
@@ -488,7 +517,7 @@ export default function Portfolio() {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.72 }}
-              className="hero-copy muted-copy mt-9 md:pl-6"
+              className="hero-copy muted-copy mt-9"
             >
               Transformo posicionamento em presença, conteúdo em percepção e marcas em
               experiências que conectam estratégia, narrativa e crescimento.
@@ -499,7 +528,7 @@ export default function Portfolio() {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 1.05 }}
-              className="editorial-label mt-16 flex w-fit items-center gap-4 md:pl-6"
+              className="editorial-label mt-16 flex w-fit items-center gap-4"
             >
               Sobre mim
               <motion.span
@@ -523,7 +552,7 @@ export default function Portfolio() {
         >
           {/* Copy */}
           <div>
-            <p className="editorial-label mb-7">Sobre Mim</p>
+            <SectionKicker index="01" label="Sobre Mim" />
             <h2 className="serif-heading section-heading">
               Comunicação que encontra{" "}
               <span style={{ fontStyle: "italic" }}>estratégia</span>, cultura e comportamento.
@@ -668,13 +697,16 @@ export default function Portfolio() {
         {/* Section header */}
         <div className="section-container pt-24 pb-16 md:pt-32 md:pb-20 lg:pt-40 lg:pb-24">
           <motion.div {...fadeUp}>
-            <p className="editorial-label mb-7">Marcas & Clientes</p>
+            <SectionKicker index="02" label="Marcas & Clientes" />
             <h2 className="serif-heading section-heading">
-              20+ marcas atendidas.
-              <br />
-              <span style={{ fontStyle: "italic", color: "var(--accent)" }}>8 frentes</span>{" "}
-              de atuação.
+              Marcas que confiaram a{" "}
+              <span style={{ fontStyle: "italic", color: "var(--accent)" }}>presença</span>{" "}
+              à estratégia.
             </h2>
+            <p className="muted-copy mt-7 max-w-2xl">
+              De gastronomia a saúde, esporte e entretenimento — marcas de segmentos distintos
+              construídas com direção criativa, posicionamento e narrativa.
+            </p>
           </motion.div>
         </div>
 
@@ -698,7 +730,10 @@ export default function Portfolio() {
             style={{ background: "linear-gradient(to left, var(--bg-primary) 0%, transparent 100%)" }}
           />
 
-          <div ref={marqueeRef} className="flex will-change-transform" data-gsap-marquee>
+          <div
+            ref={marqueeRef}
+            className={`flex will-change-transform${marqueeFallback ? " marquee-fallback" : ""}`}
+          >
             {[...brands, ...brands, ...brands, ...brands].map((brand, i) => (
               <div
                 key={`${brand.name}-${i}`}
@@ -729,7 +764,7 @@ export default function Portfolio() {
         {/* Project Grid */}
         <div className="section-container py-24 md:py-32 lg:py-40">
           <motion.div {...fadeUp} className="mb-14 md:mb-20">
-            <p className="editorial-label mb-7">Projetos Selecionados</p>
+            <SectionKicker index="03" label="Projetos Selecionados" />
             <h2 className="serif-heading section-heading">
               A estratégia que{" "}
               <span style={{ fontStyle: "italic" }}>vira presença</span>.
@@ -833,7 +868,7 @@ export default function Portfolio() {
       <section id="education" style={{ background: "var(--bg-primary)" }}>
         <motion.div {...sectionMotion} className="section-container py-[var(--section-py)]">
           <div className="mb-16 md:mb-20">
-            <p className="editorial-label mb-7">Formação & Especializações</p>
+            <SectionKicker index="04" label="Formação & Especializações" />
             <h2 className="serif-heading section-heading">
               Aprendizado aplicado à construção de marca.
             </h2>
@@ -873,7 +908,7 @@ export default function Portfolio() {
       <section id="services" style={{ background: "var(--bg-secondary)" }}>
         <motion.div {...sectionMotion} className="section-container py-[var(--section-py)]">
           <div className="mb-20">
-            <p className="editorial-label mb-7">Serviços</p>
+            <SectionKicker index="05" label="Serviços" />
             <h2 className="serif-heading section-heading">
               O que posso fazer pela sua marca.
             </h2>
@@ -934,7 +969,7 @@ export default function Portfolio() {
       {/* ========== PHOTO PANEL (between services & trajectory) ========== */}
       <section
         className="relative w-full overflow-hidden"
-        style={{ minHeight: "clamp(240px, 38vh, 420px)", background: "var(--bg-primary)" }}
+        style={{ minHeight: "clamp(360px, 58vh, 600px)", background: "var(--bg-primary)" }}
       >
         <div className="absolute inset-0 bg-gray-900">
           <Image
@@ -979,7 +1014,7 @@ export default function Portfolio() {
         <motion.div {...sectionMotion} className="section-container py-[var(--section-py)]">
           <div className="mb-16 grid gap-8 lg:grid-cols-[0.8fr_1fr] lg:items-end">
             <div>
-              <p className="editorial-label mb-7">Trajetória</p>
+              <SectionKicker index="06" label="Trajetória" />
               <h2 className="serif-heading section-heading">
                 Experiência em comunicação viva.
               </h2>
@@ -1025,39 +1060,66 @@ export default function Portfolio() {
       <section id="highlights" style={{ background: "var(--bg-secondary)" }}>
         <motion.div {...sectionMotion} className="section-container py-[var(--section-py)]">
           <div className="mb-16 max-w-5xl">
-            <p className="editorial-label mb-7">Projetos de Destaque</p>
+            <SectionKicker index="07" label="Projetos de Destaque" />
             <h2 className="serif-heading section-heading">
               Reconhecimentos que nascem de{" "}
               <span style={{ fontStyle: "italic" }}>ideia, roteiro e presença</span>.
             </h2>
           </div>
 
-          <div className="grid gap-px bg-[var(--border)] md:grid-cols-2">
-            {highlights.map((item, index) => (
-              <motion.article
-                key={item.title}
-                initial={{ opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.55, delay: index * 0.08 }}
-                className="group bg-[var(--bg-secondary)] p-8 md:p-10"
-                style={{ transition: "background 300ms ease" }}
-                onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.025)"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.background = "var(--bg-secondary)"; }}
-              >
-                <span className="editorial-label" style={{ color: "var(--text-muted)" }}>
-                  0{index + 1}
-                </span>
-                <h3 className="serif-heading mt-8" style={{ fontSize: "1.8rem" }}>
-                  {item.title}
-                </h3>
-                <div
-                  className="my-5 h-px transition-all duration-500 group-hover:w-16"
-                  style={{ width: "2rem", background: "var(--accent)" }}
+          <div className="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:gap-16">
+            {/* Feature image — podcast / bastidores */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.97 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="lg:sticky lg:top-28 lg:self-start"
+            >
+              <div className="relative overflow-hidden grayscale" style={{ aspectRatio: "3 / 4" }}>
+                <Image
+                  src="/images/photos/IMG_0578.JPG"
+                  alt="Mariana Páscoa gravando podcast — bastidores de conteúdo"
+                  fill
+                  className="object-cover object-[center_22%]"
+                  sizes="(max-width: 1024px) 100vw, 38vw"
+                  loading="lazy"
                 />
-                <p className="muted-copy">{item.description}</p>
-              </motion.article>
-            ))}
+                <div className="absolute inset-0" style={{ background: "rgba(10,10,10,0.16)" }} />
+              </div>
+              <p className="editorial-label mt-5" style={{ color: "var(--text-muted)" }}>
+                Bastidores · Podcast & Conteúdo
+              </p>
+            </motion.div>
+
+            {/* Highlights list */}
+            <div className="grid gap-px self-start border border-[var(--border)] bg-[var(--border)]">
+              {highlights.map((item, index) => (
+                <motion.article
+                  key={item.title}
+                  initial={{ opacity: 0, y: 18 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ duration: 0.55, delay: index * 0.08 }}
+                  className="group bg-[var(--bg-secondary)] p-8 md:p-10"
+                  style={{ transition: "background 300ms ease" }}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.025)"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = "var(--bg-secondary)"; }}
+                >
+                  <span className="editorial-label" style={{ color: "var(--text-muted)" }}>
+                    0{index + 1}
+                  </span>
+                  <h3 className="serif-heading mt-8" style={{ fontSize: "1.8rem" }}>
+                    {item.title}
+                  </h3>
+                  <div
+                    className="my-5 h-px transition-all duration-500 group-hover:w-16"
+                    style={{ width: "2rem", background: "var(--accent)" }}
+                  />
+                  <p className="muted-copy">{item.description}</p>
+                </motion.article>
+              ))}
+            </div>
           </div>
         </motion.div>
       </section>
@@ -1066,31 +1128,46 @@ export default function Portfolio() {
       <section id="contact" style={{ background: "var(--bg-primary)" }}>
         <motion.div
           {...sectionMotion}
-          className="section-container grid gap-16 py-[var(--section-py)] lg:grid-cols-[0.9fr_1fr]"
+          className="section-container grid gap-12 py-[var(--section-py)] lg:grid-cols-[1fr_0.8fr] lg:items-center lg:gap-16"
         >
+          {/* Copy + CTA */}
           <div>
-            <p className="editorial-label mb-7">Contato</p>
+            <SectionKicker index="08" label="Contato" />
             <h2 className="serif-heading section-heading">
-              Vamos criar uma presença que permanece?
+              Vamos criar uma presença que{" "}
+              <span style={{ fontStyle: "italic" }}>permanece</span>?
             </h2>
             <div className="my-10 h-px w-8" style={{ background: "var(--accent)" }} />
             <p className="muted-copy max-w-xl">
               Para projetos de branding, conteúdo, campanhas, presença digital e comunicação
-              integrada, fale com Mariana pelos canais abaixo ou envie uma mensagem pelo
-              formulário.
+              integrada, o caminho mais direto é uma conversa. Chame pelo WhatsApp ou acompanhe
+              o trabalho pelas redes.
             </p>
 
-            <div className="mt-12 grid gap-5">
+            {/* Primary WhatsApp CTA */}
+            <a
+              href="https://wa.me/5524992294044"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="outline-button mt-12 inline-flex min-h-16 items-center gap-4 px-10 editorial-label"
+              style={{ fontSize: "0.8125rem" }}
+            >
+              Conversar no WhatsApp
+              <span aria-hidden="true">→</span>
+            </a>
+
+            {/* Secondary channels */}
+            <div className="mt-12 flex flex-wrap gap-x-10 gap-y-5 border-t border-[var(--border)] pt-10">
               <a
-                className="project-link relative w-fit editorial-label"
+                className="project-link relative editorial-label"
                 href="https://wa.me/5524992294044"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                WhatsApp · (24) 99229-4044
+                (24) 99229-4044
               </a>
               <a
-                className="project-link relative w-fit editorial-label"
+                className="project-link relative editorial-label"
                 href="https://www.instagram.com/marianapascoamkt"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -1098,7 +1175,7 @@ export default function Portfolio() {
                 Instagram · @marianapascoamkt
               </a>
               <a
-                className="project-link relative w-fit editorial-label"
+                className="project-link relative editorial-label"
                 href="https://www.linkedin.com/search/results/all/?keywords=Mariana%20P%C3%A1scoa"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -1108,75 +1185,29 @@ export default function Portfolio() {
             </div>
           </div>
 
-          <div className="border border-[var(--border)] p-8 md:p-12">
-            <AnimatePresence mode="wait">
-              {isSubmitted ? (
-                <motion.div
-                  key="success"
-                  initial={{ opacity: 0, scale: 0.96 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.96 }}
-                  transition={{ duration: 0.35 }}
-                  className="flex min-h-[25rem] flex-col items-center justify-center text-center"
-                >
-                  <div className="mb-8 flex h-16 w-16 items-center justify-center border border-white">
-                    <span aria-hidden="true" style={{ fontSize: "1.6rem", lineHeight: 1 }}>✓</span>
-                  </div>
-                  <h3 className="serif-heading title-heading">Mensagem recebida.</h3>
-                  <p className="muted-copy mt-5 max-w-sm">
-                    Obrigada pelo contato. Mariana retornará assim que possível.
-                  </p>
-                </motion.div>
-              ) : (
-                <motion.form
-                  key="form"
-                  initial={{ opacity: 1 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.35 }}
-                  onSubmit={handleSubmit}
-                  className="grid gap-7"
-                >
-                  <input
-                    className="form-field"
-                    type="text"
-                    name="name"
-                    placeholder="Nome"
-                    aria-label="Nome"
-                    required
-                  />
-                  <input
-                    className="form-field"
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    aria-label="Email"
-                    required
-                  />
-                  <input
-                    className="form-field"
-                    type="text"
-                    name="subject"
-                    placeholder="Assunto"
-                    aria-label="Assunto"
-                  />
-                  <textarea
-                    className="form-field min-h-36 resize-none"
-                    name="message"
-                    placeholder="Mensagem"
-                    aria-label="Mensagem"
-                    required
-                  />
-                  <button
-                    type="submit"
-                    className="outline-button mt-4 min-h-14 w-full editorial-label"
-                  >
-                    Enviar mensagem
-                  </button>
-                </motion.form>
-              )}
-            </AnimatePresence>
-          </div>
+          {/* Portrait */}
+          <motion.div
+            className="relative mx-auto w-full max-w-md"
+            initial={{ opacity: 0, scale: 0.97 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 1.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+          >
+            <div className="relative overflow-hidden grayscale" style={{ aspectRatio: "3 / 4" }}>
+              <Image
+                src="/images/photos/IMG_8704.JPG"
+                alt="Mariana Páscoa — retrato editorial em preto e branco"
+                fill
+                className="object-cover object-[center_18%]"
+                sizes="(max-width: 1024px) 100vw, 38vw"
+                loading="lazy"
+              />
+            </div>
+            <div
+              className="absolute -bottom-5 right-5 h-3/4 w-3/4 border border-white/25"
+              aria-hidden="true"
+            />
+          </motion.div>
         </motion.div>
       </section>
 
@@ -1185,21 +1216,85 @@ export default function Portfolio() {
         className="border-t border-[var(--border)]"
         style={{ background: "var(--bg-primary)" }}
       >
-        <div className="mx-auto flex h-20 w-full max-w-[1440px] items-center justify-between px-6 md:px-12 lg:px-20">
-          <a
-            href="#hero"
-            className="relative z-50 editorial-label"
-            style={{ fontSize: "0.875rem", textTransform: "uppercase", letterSpacing: "0.1em" }}
-          >
-            Mariana Páscoa
-          </a>
-          <span
-            className="editorial-label text-center"
-            style={{ color: "var(--text-muted)", fontSize: "0.625rem" }}
-          >
-            © 2026 · Publicitária
-          </span>
-          <span className="hidden h-px w-16 justify-self-end bg-white md:block" />
+        <div className="section-container py-[clamp(4rem,8cqw,7rem)]">
+          {/* Wordmark + tagline */}
+          <div className="grid gap-12 border-b border-[var(--border)] pb-14 lg:grid-cols-[1.4fr_1fr] lg:gap-16">
+            <div>
+              <a href="#hero" className="serif-heading" style={{ fontSize: "clamp(2rem,5cqw,3.25rem)" }}>
+                Mariana <span style={{ fontStyle: "italic" }}>Páscoa</span>
+              </a>
+              <p className="muted-copy mt-6 max-w-md">
+                Publicitária e Growth Content Manager. Estratégia, narrativa e branding para
+                marcas que querem ser percebidas com clareza e desejo.
+              </p>
+            </div>
+
+            {/* Navigation + channels */}
+            <div className="grid grid-cols-2 gap-8">
+              <div>
+                <p className="editorial-label mb-6" style={{ color: "var(--text-muted)" }}>
+                  Navegação
+                </p>
+                <ul className="grid gap-4">
+                  {navLinks.map((link) => (
+                    <li key={link.href}>
+                      <a href={link.href} className="project-link relative editorial-label">
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <p className="editorial-label mb-6" style={{ color: "var(--text-muted)" }}>
+                  Contato
+                </p>
+                <ul className="grid gap-4">
+                  <li>
+                    <a
+                      className="project-link relative editorial-label"
+                      href="https://wa.me/5524992294044"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      WhatsApp
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      className="project-link relative editorial-label"
+                      href="https://www.instagram.com/marianapascoamkt"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Instagram
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      className="project-link relative editorial-label"
+                      href="https://www.linkedin.com/search/results/all/?keywords=Mariana%20P%C3%A1scoa"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      LinkedIn
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom bar */}
+          <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <span className="editorial-label" style={{ color: "var(--text-muted)", fontSize: "0.625rem" }}>
+              © 2026 Mariana Páscoa · Volta Redonda, Brasil
+            </span>
+            <a href="#hero" className="editorial-label flex items-center gap-3" style={{ color: "var(--text-muted)" }}>
+              Voltar ao topo
+              <span aria-hidden="true">↑</span>
+            </a>
+          </div>
         </div>
       </footer>
     </main>

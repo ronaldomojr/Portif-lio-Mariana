@@ -1,9 +1,16 @@
 "use client";
 
 import Image from "next/image";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import SmoothScroll from "./SmoothScroll";
+import ScrollProgress from "./ScrollProgress";
+import Cursor from "./Cursor";
+import ParallaxLayer from "./ParallaxLayer";
+import CountUp from "./CountUp";
+import VelocityMarquee from "./VelocityMarquee";
+import Manifesto from "./Manifesto";
 
 /* --- Navigation ----------------------------------------------------------------- */
 const navLinks = [
@@ -264,6 +271,17 @@ export default function Portfolio() {
   const marqueeRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<gsap.core.Timeline | null>(null);
+  const heroRef = useRef<HTMLElement>(null);
+
+  /* hero parallax — a foto desce mais devagar que o scroll e o texto se despede antes */
+  const { scrollYProgress: heroProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+  const heroImageY = useTransform(heroProgress, [0, 1], ["0%", "18%"]);
+  const heroImageScale = useTransform(heroProgress, [0, 1], [1, 1.12]);
+  const heroContentY = useTransform(heroProgress, [0, 0.8], [0, -70]);
+  const heroContentOpacity = useTransform(heroProgress, [0, 0.65], [1, 0]);
 
   /* scroll nav state */
   useEffect(() => {
@@ -326,6 +344,11 @@ export default function Portfolio() {
   /* JSX */
   return (
     <main className="site-shell">
+
+      {/* Camadas globais: smooth scroll, progresso de leitura e cursor editorial */}
+      <SmoothScroll />
+      <ScrollProgress />
+      <Cursor />
 
       {/* ======================== NAV ======================== */}
       <motion.header
@@ -424,20 +447,27 @@ export default function Portfolio() {
       </AnimatePresence>
 
       {/* ========== HERO ========== */}
-      <section id="hero" className="relative flex min-h-screen flex-col overflow-hidden">
-        
-        {/* Full-bleed image */}
-        <div className="absolute inset-0 bg-gray-900">
-          <Image
-            src="/images/photos/MMTS_SHOOTING LIFE0346.jpeg"
-            alt="Mariana Páscoa — Growth Content Manager"
-            fill
-            priority
-            quality={95}
-            className="object-cover"
-            style={{ objectPosition: "50% 35%" }}
-            sizes="100vw"
-          />
+      <section ref={heroRef} id="hero" className="relative flex min-h-screen flex-col overflow-hidden">
+
+        {/* Full-bleed image — parallax: desce mais devagar que o scroll */}
+        <div className="absolute inset-0 overflow-hidden bg-gray-900">
+          <motion.div
+            className="absolute inset-0"
+            style={{ y: heroImageY, scale: heroImageScale }}
+          >
+            <Image
+              src="/images/photos/MMTS_SHOOTING LIFE0346.jpeg"
+              alt="Mariana Páscoa — Growth Content Manager"
+              fill
+              preload
+              loading="eager"
+              fetchPriority="high"
+              quality={95}
+              className="object-cover"
+              style={{ objectPosition: "50% 35%" }}
+              sizes="100vw"
+            />
+          </motion.div>
           {/* Bottom-heavy gradient */}
           <div
             className="absolute inset-0"
@@ -478,8 +508,11 @@ export default function Portfolio() {
 
         <div className="flex-1" aria-hidden="true" />
 
-        {/* Headline anchored to bottom */}
-        <div className="section-container relative z-10 pb-24 md:pb-32 lg:pb-40">
+        {/* Headline anchored to bottom — sobe e some suavemente conforme o scroll */}
+        <motion.div
+          className="section-container relative z-10 pb-24 md:pb-32 lg:pb-40"
+          style={{ y: heroContentY, opacity: heroContentOpacity }}
+        >
           <div className="relative max-w-5xl md:pl-8">
             {/* Decorative vertical rule */}
             <motion.div
@@ -500,18 +533,31 @@ export default function Portfolio() {
               Publicitária · Growth Content Manager
             </motion.span>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 32 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.95, delay: 0.45 }}
-              className="serif-heading display-heading"
-            >
-              Estratégia
-              <br />
-              que vira
-              <br />
-              <span style={{ color: "var(--accent)", fontStyle: "italic" }}>presença</span>.
-            </motion.h1>
+            {/* Reveal de linha com máscara — entrada editorial, linha a linha */}
+            <h1 className="serif-heading display-heading">
+              {[
+                <>Estratégia</>,
+                <>que vira</>,
+                <>
+                  <span style={{ color: "var(--accent)", fontStyle: "italic" }}>presença</span>.
+                </>,
+              ].map((line, i) => (
+                <span key={i} className="block overflow-hidden">
+                  <motion.span
+                    className="block"
+                    initial={{ y: "112%" }}
+                    animate={{ y: 0 }}
+                    transition={{
+                      duration: 1,
+                      delay: 0.45 + i * 0.13,
+                      ease: [0.25, 0.46, 0.45, 0.94],
+                    }}
+                  >
+                    {line}
+                  </motion.span>
+                </span>
+              ))}
+            </h1>
 
             <motion.p
               initial={{ opacity: 0, y: 18 }}
@@ -540,7 +586,7 @@ export default function Portfolio() {
               </motion.span>
             </motion.a>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* ======================== ABOUT ======================== */}
@@ -626,7 +672,7 @@ export default function Portfolio() {
                     className="serif-heading block"
                     style={{ color: "var(--accent)", fontSize: "2.6rem", lineHeight: 1 }}
                   >
-                    {stat.value}
+                    <CountUp value={stat.value} />
                   </strong>
                   <span
                     className="mt-3 block"
@@ -664,15 +710,17 @@ export default function Portfolio() {
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 1.2, delay: photo.delay, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
-              <Image
-                src={photo.src}
-                alt="Mariana Páscoa — Publicitária"
-                fill
-                className="object-cover"
-                style={{ objectPosition: photo.pos }}
-                sizes="33vw"
-                loading="lazy"
-              />
+              <ParallaxLayer amount={9}>
+                <Image
+                  src={photo.src}
+                  alt="Mariana Páscoa — Publicitária"
+                  fill
+                  className="object-cover"
+                  style={{ objectPosition: photo.pos }}
+                  sizes="33vw"
+                  loading="lazy"
+                />
+              </ParallaxLayer>
               <div
                 className="absolute inset-0"
                 style={{ background: "rgba(10,10,10,0.18)" }}
@@ -687,6 +735,9 @@ export default function Portfolio() {
           ))}
         </div>
       </section>
+
+      {/* ========== MANIFESTO — scroll storytelling pinado ========== */}
+      <Manifesto />
 
       {/* ========== BRANDS MARQUEE + PROJECT GRID ========== */}
       <section
@@ -821,15 +872,17 @@ export default function Portfolio() {
           minHeight: "clamp(300px, 52vh, 560px)",
         }}
       >
-        <div className="absolute inset-0 bg-gray-900">
-          <Image
-            src="/images/photos/IMG_1150.JPG"
-            alt="Mariana Páscoa — Direção Criativa"
-            fill
-            className="object-cover object-[50%_35%]"
-            sizes="100vw"
-            loading="lazy"
-          />
+        <div className="absolute inset-0 overflow-hidden bg-gray-900">
+          <ParallaxLayer amount={12}>
+            <Image
+              src="/images/photos/IMG_1150.JPG"
+              alt="Mariana Páscoa — Direção Criativa"
+              fill
+              className="object-cover object-[50%_35%]"
+              sizes="100vw"
+              loading="lazy"
+            />
+          </ParallaxLayer>
           <div
             className="absolute inset-0"
             style={{
@@ -971,15 +1024,17 @@ export default function Portfolio() {
         className="relative w-full overflow-hidden"
         style={{ minHeight: "clamp(360px, 58vh, 600px)", background: "var(--bg-primary)" }}
       >
-        <div className="absolute inset-0 bg-gray-900">
-          <Image
-            src="/images/photos/MMTS_SHOOTING LIFE0410.jpeg"
-            alt="Mariana Páscoa — Bastidores da Comunicação"
-            fill
-            className="object-cover object-[50%_45%]"
-            sizes="100vw"
-            loading="lazy"
-          />
+        <div className="absolute inset-0 overflow-hidden bg-gray-900">
+          <ParallaxLayer amount={12}>
+            <Image
+              src="/images/photos/MMTS_SHOOTING LIFE0410.jpeg"
+              alt="Mariana Páscoa — Bastidores da Comunicação"
+              fill
+              className="object-cover object-[50%_45%]"
+              sizes="100vw"
+              loading="lazy"
+            />
+          </ParallaxLayer>
           <div
             className="absolute inset-0"
             style={{
@@ -1124,6 +1179,9 @@ export default function Portfolio() {
         </motion.div>
       </section>
 
+      {/* ========== FAIXA TIPOGRÁFICA — reage à velocidade do scroll ========== */}
+      <VelocityMarquee />
+
       {/* ======================== CONTACT ======================== */}
       <section id="contact" style={{ background: "var(--bg-primary)" }}>
         <motion.div
@@ -1176,7 +1234,7 @@ export default function Portfolio() {
               </a>
               <a
                 className="project-link relative editorial-label"
-                href="https://www.linkedin.com/search/results/all/?keywords=Mariana%20P%C3%A1scoa"
+                href="https://www.linkedin.com/in/mariana-p%C3%A1scoa-535456321/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -1273,7 +1331,7 @@ export default function Portfolio() {
                   <li>
                     <a
                       className="project-link relative editorial-label"
-                      href="https://www.linkedin.com/search/results/all/?keywords=Mariana%20P%C3%A1scoa"
+                      href="https://www.linkedin.com/in/mariana-p%C3%A1scoa-535456321/"
                       target="_blank"
                       rel="noopener noreferrer"
                     >

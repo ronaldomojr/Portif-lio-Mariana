@@ -41,125 +41,159 @@ const brands = [
   { name: "MamuTV", src: "/images/logos/MAMUTV.jpg" },
 ];
 
-/* --- Project grid ------------------------------------------------------------ */
-const projects = [
+/* --- Client index (by segment) ------------------------------------------------ */
+type ClientBrand = { name: string; href?: string; note?: string };
+const clientSegments: { segment: string; brands: ClientBrand[] }[] = [
   {
-    name: "Mamutus Branding & Design",
-    category: "Branding & Identidade Visual",
-    logo: "/images/logos/MAMUTE -- NOME -- TAG BRANCO.png",
-    featured: true,
+    segment: "Saúde, Estética & Performance",
+    brands: [
+      { name: "Dr. Leopoldo Menezes", href: "https://www.instagram.com/drleopoldomenezes/" },
+      { name: "Body Prime Smart", href: "https://www.instagram.com/bodyprimesmart/" },
+      { name: "Clínica NeoClub", href: "https://www.instagram.com/clinicaneoclub/" },
+      { name: "Mais Pano", href: "https://www.instagram.com/maispano/" },
+    ],
   },
   {
-    name: "Festival da Paranoide",
-    category: "Entretenimento",
-    logo: "/images/logos/FESTIVAL DA PARANOIDE.png",
-    featured: false,
+    segment: "Gastronomia & Experiências",
+    brands: [
+      { name: "MokaFé Gastrobar", href: "https://www.instagram.com/mokafe.gastrobar/" },
+      { name: "Zen Cozinha Oriental", href: "https://www.instagram.com/zencozinhaoriental/" },
+      { name: "Vila Bistrô", href: "https://www.instagram.com/restaurante.vilabistro/" },
+      { name: "Lord Jim Room", href: "https://www.instagram.com/lordjimroom/" },
+      { name: "Salsa Trattoria", href: "https://www.instagram.com/salsatrattoria/" },
+      { name: "Brooklyn Pizza & Burger", href: "https://www.instagram.com/brooklynpizzaburguer/" },
+      { name: "Brooklyn Fast", href: "https://www.instagram.com/brooklynfastsider/" },
+      { name: "Sigma Gelato & Café", href: "https://www.instagram.com/sigmagelato/" },
+      { name: "Verdi&Co.", href: "https://www.instagram.com/verdi.e.co/" },
+    ],
   },
   {
-    name: "Vila Bistrô",
-    category: "Gastronomia",
-    logo: "/images/logos/VILA BISTRÔ.png",
-    featured: false,
+    segment: "Esporte, Lifestyle & Entretenimento",
+    brands: [
+      { name: "Arena Emirados", href: "https://www.instagram.com/arena_emirados/" },
+      { name: "Emirados For Shape", href: "https://www.instagram.com/emiradosforshape/" },
+      { name: "Goat Emirados", href: "https://www.instagram.com/goatemirados/" },
+      { name: "Festival da Paranoide", href: "https://www.instagram.com/festivaldaparanoide/" },
+      { name: "MamuTV", href: "https://www.instagram.com/mamutv_/" },
+    ],
   },
   {
-    name: "Arena Emirados",
-    category: "Esporte & Lifestyle",
-    logo: "/images/logos/ARENA EMIRADOS.jpg",
-    featured: true,
+    segment: "Institucional, Negócios & Serviços",
+    brands: [
+      { name: "Portal da Saudade", href: "https://www.instagram.com/portaldasaudade/" },
+      { name: "Poubel & Machado Advocacia", href: "https://www.instagram.com/pemadvocacia/" },
+      { name: "Tostes & Diniz", href: "https://www.instagram.com/tostesediniz/" },
+      { name: "Olfir Rogêdo Contabilidade", href: "https://www.instagram.com/olfirrogedocontab/" },
+      {
+        name: "Casa de Mãe",
+        note: "Atendimento e triagem para o rebranding de todos os produtos da marca.",
+      },
+      { name: "Mamutus Branding & Design", href: "https://www.instagram.com/mamutusbranding/" },
+      { name: "Montari Negócios Imobiliários", href: "https://www.instagram.com/montari.ni/" },
+    ],
   },
-  {
-    name: "Body Prime Smart",
-    category: "Saúde & Performance",
-    logo: "/images/logos/BODYPRIME.png",
-    featured: true,
-  },
-  {
-    name: "Sigma Gelato & Café",
-    category: "Gastronomia",
-    logo: "/images/logos/SIGMA.png",
-    featured: false,
-  },
-  {
-    name: "Boizão",
-    category: "Gastronomia",
-    logo: "/images/logos/BOIZÃO.png",
-    featured: false,
-  },
-  {
-    name: "Verdi & Co",
-    category: "Gastronomia",
-    logo: "/images/logos/VERDI & CO.png",
-    featured: false,
-  },
-  {
-    name: "Dr. Leopoldo Menezes",
-    category: "Saúde",
-    logo: "/images/logos/DR. LEOPOLDO MENEZES.jpg",
-    featured: false,
-  },
-  {
-    name: "Montari Negócios",
-    category: "Negócios & Serviços",
-    logo: "/images/logos/MONTARI .png",
-    featured: false,
-  },
-  {
-    name: "Poubel & Machado",
-    category: "Advocacia",
-    logo: "/images/logos/POUBEL & MACHADO.png",
-    featured: false,
-  },
-  {
-    name: "Casa de Mãe",
-    category: "Negócios & Serviços",
-    logo: "/images/logos/CASA DE MÃE.png",
-    featured: true,
-  },
+];
+
+/* --- Actuation in projects ---------------------------------------------------- */
+const projectActions = [
+  "Atendimento ao cliente",
+  "Desenvolvimento de posicionamento de marca",
+  "Estratégia de conteúdo",
+  "Planejamento editorial",
+  "Gestão estratégica de redes sociais",
+  "Construção de tom de voz",
+  "Direção criativa",
+  "Roteirização para campanhas e vídeos",
+  "Planejamento de campanhas sazonais",
+  "Cobertura de eventos",
+  "Estratégias de crescimento orgânico",
+  "Comunicação institucional",
+  "Planejamento de ativações",
+  "Organização de presença multicanal",
+  "Desenvolvimento de narrativas de marca",
+  "Produção de conteúdo audiovisual",
+  "Estruturação de campanhas online e offline",
 ];
 
 /* --- Stats -------------------------------------------------------------------- */
 const stats = [
-  { value: "20+", label: "Marcas e Projetos" },
+  { value: "30+", label: "Marcas e Projetos" },
   { value: "08", label: "Frentes de Atuação" },
   { value: "04", label: "Projetos Reconhecidos" },
   { value: "2028", label: "Formação UniFOA" },
 ];
 
-/* --- Services ----------------------------------------------------------------- */
-const services = [
+/* --- Skills (Habilidades Profissionais) --------------------------------------- */
+const skills = [
   {
     number: "01",
-    title: "Direção Criativa & Narrativa",
-    description:
-      "Curadoria criativa, definição estética e construção de narrativas para campanhas, vídeos institucionais, podcasts e comunicação multicanal.",
-  },
-  {
-    number: "02",
     title: "Branding & Posicionamento",
     description:
       "Desenvolvimento estratégico de marcas, definição de percepção, fortalecimento de autoridade e alinhamento entre identidade, narrativa e presença digital.",
   },
   {
-    number: "03",
+    number: "02",
     title: "Estratégia de Conteúdo",
     description:
       "Planejamento editorial, desenvolvimento de campanhas, construção de linhas editoriais e criação de conteúdos com foco em conexão, posicionamento e crescimento orgânico.",
   },
   {
+    number: "03",
+    title: "Direção Criativa & Narrativa",
+    description:
+      "Curadoria criativa, definição estética e construção de narrativas para campanhas, vídeos institucionais, podcasts e comunicação multicanal.",
+  },
+  {
     number: "04",
+    title: "Comunicação Integrada",
+    description:
+      "Planejamento e execução de ações online e offline, garantindo coerência de marca em diferentes pontos de contato.",
+  },
+  {
+    number: "05",
     title: "Marketing Digital & Growth",
     description:
       "Gestão estratégica de redes sociais, análise de métricas, SEO, comportamento de audiência e adaptação de campanhas baseada em performance.",
   },
+  {
+    number: "06",
+    title: "Produção Audiovisual & Roteirização",
+    description:
+      "Criação de roteiros, storytelling, direção de conteúdo, cobertura de eventos e desenvolvimento de conteúdos audiovisuais estratégicos.",
+  },
+  {
+    number: "07",
+    title: "Liderança & Gestão de Projetos",
+    description:
+      "Coordenação de equipes multidisciplinares, organização de processos criativos e acompanhamento estratégico de campanhas e entregas.",
+  },
+  {
+    number: "08",
+    title: "Comunicação & Mediação",
+    description:
+      "Experiência em apresentação, mediação de eventos, podcasts e condução de entrevistas e conversas institucionais.",
+  },
 ];
 
 /* --- Education ---------------------------------------------------------------- */
-const education = [
+type EducationItem = { title: string; meta: string; description?: string; topics?: string[] };
+const education: EducationItem[] = [
   {
     title: "Publicidade e Propaganda",
     meta: "Centro Universitário de Volta Redonda — UniFOA",
     description:
-      "Formação voltada para comunicação integrada, produção audiovisual, design editorial, estratégia de marca, narrativa/storytelling, planejamento de campanhas, fotografia e cultura digital.",
+      "Graduação em andamento, com formação voltada para comunicação no campo publicitário e jornalístico. Ao longo da graduação, desenvolvi projetos voltados para:",
+    topics: [
+      "Comunicação integrada",
+      "Produção audiovisual",
+      "Design editorial",
+      "Estratégia de marca",
+      "Narrativa e storytelling",
+      "Planejamento de campanhas",
+      "Fotografia",
+      "Cultura digital e comportamento de público",
+      "Escrita publicitária e jornalística",
+    ],
   },
   {
     title: "Branding e Estratégia de Marca",
@@ -171,7 +205,7 @@ const education = [
     title: "Marketing Digital",
     meta: "RD University",
     description:
-      "Estratégias digitais, atração, conversão, comportamento de audiência e IA aplicada ao marketing.",
+      "Formação voltada para estratégias digitais, atração, conversão, comportamento de audiência e IA aplicada ao marketing.",
   },
   {
     title: "Comunidade Laje",
@@ -179,61 +213,112 @@ const education = [
     description:
       "Estudos voltados para branding contemporâneo, construção de marcas relevantes e comunicação orientada por cultura e comportamento.",
   },
+  {
+    title: "Neurociência Aplicada à Comunicação",
+    meta: "Especialização",
+    description:
+      "Aprofundamento em comportamento humano, percepção, tomada de decisão e impacto emocional na comunicação.",
+  },
+  {
+    title: "Storytelling: Pensar Boas Histórias",
+    meta: "Curso",
+  },
 ];
 
 /* --- Experiences -------------------------------------------------------------- */
-const experiences = [
+type ExperienceItem = {
+  period: string;
+  role: string;
+  company: string;
+  description: string;
+  bullets?: string[];
+};
+const experiences: ExperienceItem[] = [
   {
     period: "Atual",
     role: "Growth Content Manager",
     company: "Mamutus Branding & Design",
     description:
-      "Atuação estratégica no desenvolvimento de marcas, campanhas e fortalecimento de branding. Responsável por atendimento ao cliente, estratégia de posicionamento, estruturação de campanhas, desenvolvimento narrativo, planejamento de conteúdo, comunicação multicanal e construção de percepção de marca.",
+      "Atuação estratégica no desenvolvimento de marcas, campanhas e fortalecimento de branding para diferentes segmentos. Responsável por:",
+    bullets: [
+      "Atendimento ao cliente",
+      "Estratégia de posicionamento",
+      "Estruturação de campanhas",
+      "Desenvolvimento narrativo",
+      "Planejamento de conteúdo",
+      "Comunicação multicanal",
+      "Construção de percepção de marca",
+    ],
   },
   {
     period: "2025",
     role: "Especialista em Mídias Sociais & Marketing",
     company: "Companhia Vitis Souls",
     description:
-      "Gestão estratégica de marketing e comunicação integrada. Atuação em campanhas digitais, SEO, produção multimídia, gestão de redes sociais, crescimento orgânico, planejamento editorial, eventos institucionais, comunicação offline e liderança de equipe. Destaque para a liderança da comunicação de um congresso universitário regional, coordenando equipe de Publicidade e Jornalismo.",
+      "Experiência voltada para gestão estratégica de marketing e comunicação integrada. Atuação em:",
+    bullets: [
+      "Campanhas digitais",
+      "SEO e crescimento orgânico",
+      "Produção de conteúdo multimídia",
+      "Gestão de redes sociais",
+      "Planejamento editorial",
+      "Eventos institucionais",
+      "Comunicação offline",
+      "Liderança de equipe",
+    ],
   },
   {
     period: "Freelancer",
-    role: "Social Media",
+    role: "Social Media Freelancer",
     company: "Marcas e profissionais de diferentes segmentos",
     description:
-      "Desenvolvimento de estratégias digitais, planejamento de conteúdo, gestão de redes sociais e fortalecimento de presença digital. Atuação direta no desenvolvimento de posicionamento, direção criativa, roteirização, planejamento editorial e presença multicanal.",
-  },
-  {
-    period: "2023 – 2024",
-    role: "Assistente Administrativo",
-    company: "Malta Rio Industrial",
-    description:
-      "Organização de planilhas, notas fiscais e relatórios analíticos.",
+      "Atuação no desenvolvimento de estratégias digitais, planejamento de conteúdo, gestão de redes sociais e fortalecimento de presença digital para profissionais e marcas de diferentes segmentos.",
   },
 ];
 
+/* Destaque narrativo da experiência na Companhia Vitis Souls. */
+const experienceHighlight =
+  "Um dos principais destaques foi a liderança da comunicação de um congresso universitário regional, coordenando uma equipe multidisciplinar de Publicidade e Jornalismo.";
+
 /* --- Highlights --------------------------------------------------------------- */
-const highlights = [
+type HighlightItem = { title: string; description: string; bullets?: string[] };
+const highlights: HighlightItem[] = [
   {
     title: "Podcast Mentes Pensantes",
     description:
-      "Projeto autoral vencedor do prêmio NaMoral Jovens Talentos 2024. Atuação completa em idealização, estratégia, roteirização, gestão de conteúdo, posicionamento digital e produção de narrativas.",
+      "Projeto autoral vencedor do prêmio NaMoral Jovens Talentos 2024, promovido pela APP Brasil em parceria com o Ministério Público do Distrito Federal. Atuação completa em:",
+    bullets: [
+      "Idealização",
+      "Estratégia",
+      "Roteirização",
+      "Gestão de conteúdo",
+      "Posicionamento digital",
+      "Redes sociais",
+      "Apresentação",
+      "Produção de cortes e narrativas",
+    ],
   },
   {
     title: "Talentos da Publicidade — TV Rio Sul",
     description:
-      "Projeto audiovisual finalista e 2º colocado no concurso comemorativo de 35 anos da TV Rio Sul (Afiliada Globo). Responsável pelo conceito criativo, roteiro, produção, organização audiovisual e edição final.",
+      "Projeto audiovisual finalista e 2º colocado no concurso comemorativo de 35 anos da TV Rio Sul, afiliada Rede Globo. Responsável por:",
+    bullets: [
+      "Conceito criativo",
+      "Roteiro",
+      "Produção",
+      "Organização audiovisual",
+      "Edição final",
+    ],
   },
   {
     title: "ComunicaCast — UniFOA",
     description:
-      "Participação como roteirista e host convidada do podcast universitário oficial da Escola de Comunicação do UniFOA.",
+      "Participação como roteirista e host convidada do podcast universitário da Escola de Comunicação do UniFOA.",
   },
   {
     title: "Mediação de Eventos Acadêmicos",
     description:
-      "Condução de palestras e rodas de conversa sobre impacto social, comunicação e cultura, incluindo a palestra 'Sabedoria Ancestral e Preservação Cultural na Comunicação'.",
+      "Experiência em condução e mediação de palestras e rodas de conversa voltadas para comunicação, cultura e impacto social. Entre elas: a palestra “Sabedoria Ancestral e Preservação Cultural na Comunicação” e a mediação da roda de conversa do curta “Carne”, no Circuito Universitário do Ministério da Cultura.",
   },
 ];
 
@@ -498,7 +583,7 @@ export default function Portfolio() {
               className="editorial-label hidden sm:block"
               style={{ color: "rgba(245,240,235,0.55)" }}
             >
-              Branding · Conteúdo · Estratégia
+              Marca · Conteúdo · Comunicação
             </span>
             <span className="editorial-label" style={{ color: "rgba(245,240,235,0.55)" }}>
               Ed. 2026
@@ -530,16 +615,16 @@ export default function Portfolio() {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="editorial-label block mb-6"
             >
-              Publicitária · Growth Content Manager
+              Publicitária
             </motion.span>
 
             {/* Reveal de linha com máscara — entrada editorial, linha a linha */}
             <h1 className="serif-heading display-heading">
               {[
-                <>Estratégia</>,
-                <>que vira</>,
+                <>Estrategista</>,
+                <>de marca, conteúdo</>,
                 <>
-                  <span style={{ color: "var(--accent)", fontStyle: "italic" }}>presença</span>.
+                  e <span style={{ color: "var(--accent)", fontStyle: "italic" }}>comunicação</span>.
                 </>,
               ].map((line, i) => (
                 <span key={i} className="block overflow-hidden">
@@ -600,30 +685,36 @@ export default function Portfolio() {
           <div>
             <SectionKicker index="01" label="Sobre Mim" />
             <h2 className="serif-heading section-heading">
-              Comunicação que encontra{" "}
-              <span style={{ fontStyle: "italic" }}>estratégia</span>, cultura e comportamento.
+              Muito prazer,{" "}
+              <span style={{ fontStyle: "italic" }}>Mariana</span>!
             </h2>
             <div className="my-10 h-px w-8" style={{ background: "var(--accent)" }} />
             <div className="grid gap-7">
               <p className="muted-copy">
-                Sou graduanda em Publicidade e Propaganda pelo Centro Universitário de Volta
-                Redonda — UniFOA, com previsão de término em 2028. Profissional de marketing,
-                publicitária e diretora artística, apaixonada por comunicação estratégica,
-                branding e construção de marcas com identidade forte e presença relevante.
+                Sou graduanda em Publicidade e Propaganda do UniFOA, profissional de marketing
+                e apaixonada por comunicação estratégica, branding e construção de marcas com
+                identidade forte e presença relevante.
               </p>
               <p className="muted-copy">
                 Minha trajetória começou através da criação de conteúdo e da atuação como
-                social media, evoluindo para uma visão estratégica da comunicação. Acredito
-                que a comunicação vai muito além de estética ou frequência de postagem; marcas
-                são percebidas através das experiências, da narrativa e da forma como ocupam
-                espaço no digital e fora dele.
+                social media, mas, ao longo dos anos, evoluiu para uma visão muito mais
+                estratégica da comunicação. Hoje, atuo desenvolvendo posicionamento, narrativa,
+                campanhas, planejamento de conteúdo e fortalecimento de marcas em diferentes
+                canais.
               </p>
               <p className="muted-copy">
-                Por isso, meu trabalho busca unir criatividade, comportamento, branding e
-                estratégia para criar conexões reais entre marcas e pessoas. Atualmente, atuo
-                como Growth Content Manager na Mamutus Branding & Design, desenvolvendo
-                estratégias de posicionamento, campanhas e fortalecimento de marca para
-                diferentes segmentos.
+                Acredito que a comunicação vai muito além de estética ou frequência de
+                postagem. Marcas são percebidas através das experiências, da narrativa e da
+                forma como ocupam espaço no digital e fora dele. Por isso, meu trabalho busca
+                unir criatividade, comportamento, branding e estratégia para criar conexões
+                reais entre marcas e pessoas.
+              </p>
+              <p className="muted-copy">
+                Atualmente, atuo como Growth Content Manager na Mamutus Branding & Design,
+                desenvolvendo estratégias de posicionamento, campanhas e fortalecimento de
+                marca para diferentes segmentos. Minha atuação combina visão estratégica,
+                direção criativa, comunicação integrada e desenvolvimento narrativo para
+                construir marcas mais relevantes, humanas e memoráveis.
               </p>
             </div>
 
@@ -812,55 +903,77 @@ export default function Portfolio() {
           </div>
         </div>
 
-        {/* Project Grid */}
+        {/* Client index — todos os clientes por segmento */}
         <div className="section-container py-24 md:py-32 lg:py-40">
           <motion.div {...fadeUp} className="mb-14 md:mb-20">
-            <SectionKicker index="03" label="Projetos Selecionados" />
+            <SectionKicker index="03" label="Cases & Clientes" />
             <h2 className="serif-heading section-heading">
-              A estratégia que{" "}
-              <span style={{ fontStyle: "italic" }}>vira presença</span>.
+              Marcas com as quais já{" "}
+              <span style={{ fontStyle: "italic" }}>trabalhei</span>.
             </h2>
             <p className="muted-copy mt-7 max-w-2xl">
-              Direção criativa, posicionamento e narrativa aplicados a marcas reais — do
-              conceito à presença.
+              Direção criativa, posicionamento e narrativa aplicados a marcas reais — de saúde
+              e gastronomia a esporte, entretenimento e negócios.
             </p>
           </motion.div>
 
-          <div className="project-grid">
-            {projects.map((project, index) => (
+          <div className="client-index border-t border-[var(--border)]">
+            {clientSegments.map((seg, segIndex) => (
               <motion.div
-                key={project.name}
-                className={`project-card${project.featured ? " project-card--featured" : ""}`}
-                initial={{ opacity: 0, y: 24 }}
+                key={seg.segment}
+                className="client-segment"
+                initial={{ opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
-                transition={{
-                  duration: 0.65,
-                  delay: (index % 4) * 0.08,
-                  ease: [0.25, 0.46, 0.45, 0.94],
-                }}
+                transition={{ duration: 0.55, delay: segIndex * 0.06 }}
               >
-                <div className="project-card__inner">
-                  <div className="project-card__logo-wrap">
-                    <Image
-                      src={project.logo}
-                      alt={project.name}
-                      fill
-                      className="object-contain project-card__logo"
-                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div className="project-card__info">
-                    <span className="project-card__category editorial-label">
-                      {project.category}
-                    </span>
-                    <p className="project-card__name serif-heading">{project.name}</p>
-                  </div>
-                </div>
+                <span className="editorial-label client-segment__label">{seg.segment}</span>
+                <ul className="client-list">
+                  {seg.brands.map((brand) => (
+                    <li key={brand.name} className="client-list__item">
+                      {brand.href ? (
+                        <a
+                          href={brand.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="project-link relative serif-heading client-list__name"
+                        >
+                          {brand.name}
+                        </a>
+                      ) : (
+                        <span className="serif-heading client-list__name">{brand.name}</span>
+                      )}
+                      {brand.note && <span className="client-list__note">{brand.note}</span>}
+                    </li>
+                  ))}
+                </ul>
               </motion.div>
             ))}
           </div>
+
+          {/* Minha atuação nos projetos */}
+          <motion.div
+            className="mt-20 border-t border-[var(--border)] pt-14 md:mt-24 md:pt-16"
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="editorial-label" style={{ color: "var(--text-muted)" }}>
+              Minha atuação nos projetos
+            </span>
+            <p className="muted-copy mt-6 max-w-3xl">
+              Dependendo da necessidade de cada marca, atuei em diferentes frentes estratégicas
+              e criativas, incluindo:
+            </p>
+            <ul className="actions-list mt-10">
+              {projectActions.map((action) => (
+                <li key={action} className="actions-list__item">
+                  {action}
+                </li>
+              ))}
+            </ul>
+          </motion.div>
         </div>
       </section>
 
@@ -950,29 +1063,38 @@ export default function Portfolio() {
                 <h3 className="serif-heading mt-5" style={{ fontSize: "1.65rem" }}>
                   {item.title}
                 </h3>
-                <p className="muted-copy mt-5">{item.description}</p>
+                {item.description && <p className="muted-copy mt-5">{item.description}</p>}
+                {item.topics && (
+                  <ul className="detail-bullets detail-bullets--cols mt-5">
+                    {item.topics.map((topic) => (
+                      <li key={topic} className="detail-bullets__item">
+                        {topic}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </motion.article>
             ))}
           </div>
         </motion.div>
       </section>
 
-      {/* ======================== SERVICES ======================== */}
+      {/* ======================== HABILIDADES PROFISSIONAIS ======================== */}
       <section id="services" style={{ background: "var(--bg-secondary)" }}>
         <motion.div {...sectionMotion} className="section-container py-[var(--section-py)]">
           <div className="mb-20">
-            <SectionKicker index="05" label="Serviços" />
+            <SectionKicker index="05" label="Habilidades Profissionais" />
             <h2 className="serif-heading section-heading">
-              O que posso fazer pela sua marca.
+              Áreas de atuação e atribuições.
             </h2>
             <p className="muted-copy mt-7 max-w-3xl">
-              Direção criativa, branding, conteúdo e comunicação integrada — com visão
+              Branding, conteúdo, direção criativa e comunicação integrada — com visão
               estratégica e presença real.
             </p>
           </div>
 
           <div className="border-t border-[var(--border)]">
-            {services.map((service, index) => (
+            {skills.map((service, index) => (
               <motion.article
                 key={service.number}
                 className="group grid gap-8 border-b border-[var(--border)] py-10 transition-colors duration-300 md:grid-cols-[0.18fr_0.42fr_0.8fr] md:items-center md:py-14"
@@ -1104,7 +1226,23 @@ export default function Portfolio() {
                     {exp.company}
                   </p>
                 </div>
-                <p className="muted-copy">{exp.description}</p>
+                <div>
+                  <p className="muted-copy">{exp.description}</p>
+                  {exp.bullets && (
+                    <ul className="detail-bullets detail-bullets--cols mt-5">
+                      {exp.bullets.map((bullet) => (
+                        <li key={bullet} className="detail-bullets__item">
+                          {bullet}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  {exp.role.startsWith("Especialista") && (
+                    <p className="muted-copy mt-6" style={{ fontStyle: "italic" }}>
+                      {experienceHighlight}
+                    </p>
+                  )}
+                </div>
               </motion.article>
             ))}
           </div>
@@ -1115,7 +1253,7 @@ export default function Portfolio() {
       <section id="highlights" style={{ background: "var(--bg-secondary)" }}>
         <motion.div {...sectionMotion} className="section-container py-[var(--section-py)]">
           <div className="mb-16 max-w-5xl">
-            <SectionKicker index="07" label="Projetos de Destaque" />
+            <SectionKicker index="07" label="Projetos & Reconhecimentos" />
             <h2 className="serif-heading section-heading">
               Reconhecimentos que nascem de{" "}
               <span style={{ fontStyle: "italic" }}>ideia, roteiro e presença</span>.
@@ -1172,6 +1310,15 @@ export default function Portfolio() {
                     style={{ width: "2rem", background: "var(--accent)" }}
                   />
                   <p className="muted-copy">{item.description}</p>
+                  {item.bullets && (
+                    <ul className="detail-bullets detail-bullets--cols mt-5">
+                      {item.bullets.map((bullet) => (
+                        <li key={bullet} className="detail-bullets__item">
+                          {bullet}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </motion.article>
               ))}
             </div>
